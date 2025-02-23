@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,13 +24,18 @@ public class categoryDao {
 	public Category addCategory(String name) {
 		Category category = new Category();
 		category.setName(name);
-		this.sessionFactory.getCurrentSession().saveOrUpdate(category);
+		// this.sessionFactory.getCurrentSession().saveOrUpdate(category);
+		Session session = sessionFactory.openSession();  // 🔍 Use openSession() instead of getCurrentSession()
+		Transaction tx = session.beginTransaction();
+		this.sessionFactory.getCurrentSession().persist(category);
+		tx.commit();
+		session.close();
 		return category;
 	}
 
 	@Transactional
 	public List<Category> getCategories() {
-		return this.sessionFactory.getCurrentSession().createQuery("from CATEGORY").list();
+		return this.sessionFactory.getCurrentSession().createQuery("from Category", Category.class).list();
 	}
 
 	@Transactional

@@ -33,6 +33,7 @@ public class SecurityConfiguration {
                    .authorizeHttpRequests(requests -> requests
             		 .requestMatchers(new AntPathRequestMatcher("/admin/login")).permitAll()
                      .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+					//  .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ROLE_ADMIN")
                     )
                     .formLogin(login -> login
                             .loginPage("/admin/login")
@@ -41,14 +42,15 @@ public class SecurityConfiguration {
                                 response.sendRedirect("/admin/"); // Redirect on success
                             })
                             .failureHandler((request, response, exception) -> {
+								exception.printStackTrace();  // Print error to console
                                 response.sendRedirect("/admin/login?error=true"); // Redirect on failure
                             }))
                     
                     .logout(logout -> logout.logoutUrl("/admin/logout")
                             .logoutSuccessUrl("/admin/login")
                             .deleteCookies("JSESSIONID"))
-                    .exceptionHandling(exception -> exception
-                            .accessDeniedPage("/403")  // Custom 403 page
+                    .exceptionHandling(exception -> 
+						exception.accessDeniedPage("/403") // Custom 403 page
                         );
             http.csrf(csrf -> csrf.disable());
 			return http.build();
@@ -64,6 +66,7 @@ public class SecurityConfiguration {
             http.authorizeHttpRequests(requests -> requests
             		.antMatchers("/login", "/register", "/newuserregister" ,"/test", "/test2").permitAll()
                     .antMatchers("/**").hasRole("USER"))
+					// .antMatchers("/**").hasAuthority("ROLE_NORMAL"))
                     .formLogin(login -> login
                             .loginPage("/login")
                             .loginProcessingUrl("/userloginvalidate")
@@ -93,13 +96,14 @@ public class SecurityConfiguration {
 			if(user == null) {
 	            throw new UsernameNotFoundException("User with username " + username + " not found.");
 			}
-			String role =  user.getRole().equals("ROLE_ADMIN") ? "ADMIN":"USER"; 
-			
+			String role =  user.getRole().equalsIgnoreCase("ROLE_ADMIN") ? "ADMIN":"USER"; 
 			return org.springframework.security.core.userdetails.User
 					.withUsername(username)
 					.passwordEncoder(input->passwordEncoder().encode(input))
 					.password(user.getPassword())
 					.roles(role)
+					// .roles(user.getRole().replace("ROLE_", ""))
+					// .authorities(user.getRole())
 					.build();
 		};
 	}

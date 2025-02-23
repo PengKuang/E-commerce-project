@@ -188,8 +188,8 @@ public class AdminController {
 		String displayusername,displaypassword,displayemail,displayaddress;
 		try
 		{
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","");
+			Class.forName("org.h2.Driver");
+			Connection con = DriverManager.getConnection("jdbc:h2:file:./data/testdb","sa","");
 			PreparedStatement stmt = con.prepareStatement("select * from users where username = ?"+";");
 			
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -225,8 +225,8 @@ public class AdminController {
 	{
 		try
 		{
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommjava","root","");
+			Class.forName("org.h2.Driver");
+			Connection con = DriverManager.getConnection("jdbc:h2:file:./data/testdb","sa","");
 			
 			PreparedStatement pst = con.prepareStatement("update users set username= ?,email = ?,password= ?, address= ? where uid = ?;");
 			pst.setString(1, username);

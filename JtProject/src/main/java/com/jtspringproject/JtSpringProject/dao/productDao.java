@@ -22,7 +22,7 @@ public class productDao {
 	
 	@Transactional
 	public List<Product> getProducts(){
-		return this.sessionFactory.getCurrentSession().createQuery("from PRODUCT").list();
+		return this.sessionFactory.getCurrentSession().createQuery("from PRODUCT", Product.class).getResultList();
 	}
 	
 	@Transactional

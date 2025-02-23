@@ -26,7 +26,7 @@ public class userDao {
    @Transactional
     public List<User> getAllUser() {
         Session session = this.sessionFactory.getCurrentSession();
-		List<User>  userList = session.createQuery("from CUSTOMER").list();
+		List<User>  userList = session.createQuery("from User", User.class).list();
         return userList;
     }
     
@@ -42,7 +42,7 @@ public class userDao {
 //    }
     @Transactional
     public User getUser(String username,String password) {
-    	Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
+		Query<User> query = sessionFactory.getCurrentSession().createQuery("from User where username = :username", User.class);
     	query.setParameter("username",username);
     	
     	try {
@@ -63,7 +63,7 @@ public class userDao {
 
 	@Transactional
 	public boolean userExists(String username) {
-		Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
+		Query<User> query = sessionFactory.getCurrentSession().createQuery("from User where username = :username", User.class);
 		query.setParameter("username",username);
 		return !query.getResultList().isEmpty();
 	}

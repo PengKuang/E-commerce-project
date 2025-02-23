@@ -15,28 +15,28 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 public class HibernateConfiguration {
-    @Value("${db.driver}")
+    @Value("${spring.datasource.driver-class-name}")
     private String DRIVER;
  
-    @Value("${db.password}")
+    @Value("${spring.datasource.password}")
     private String PASSWORD;
  
-    @Value("${db.url}")
+    @Value("${spring.datasource.url}")
     private String URL;
  
-    @Value("${db.username}")
+    @Value("${spring.datasource.username}")
     private String USERNAME;
  
-    @Value("${hibernate.dialect}")
+    @Value("${spring.jpa.database-platform}")
     private String DIALECT;
  
-    @Value("${hibernate.show_sql}")
+    @Value("${spring.jpa.show-sql}")
     private String SHOW_SQL;
  
-    @Value("${hibernate.hbm2ddl.auto}")
+    @Value("${spring.jpa.hibernate.ddl-auto}")
     private String HBM2DDL_AUTO;
  
-    @Value("${entitymanager.packagesToScan}")
+    @Value("${spring.jpa.packages-to-scan}")
     private String PACKAGES_TO_SCAN;
  
     @Bean
