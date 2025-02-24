@@ -1,7 +1,3 @@
-## Old Version
-- https://github.com/jaygajera17/E-commerce-project-springBoot/tree/main
-- issue: everytime connection open close for access database 
-
 ## New Version ( what's new)
 - Hibernate configuration added( database and tables automatically create when run the project)
 - Service classes provide reusable services throughout project
@@ -18,30 +14,14 @@
     * If you are using IntelliJ IDEA, make sure the IDE opens project as **Maven** and recognizes the project as a Spring Boot project. Also, you must change the working directory of the project so that the views (the actual web pages to be shown) are found by Spring Boot (check out [Web Directories IntelliJ IDEA](#web-directories).
 3. Make sure you are in the `JtProject` directory
 4. Configure the database connection in `application.properties` file (check the [Database](#database) section below for more info)
-5. Run the project (by running the `main` method in `JtSpringProjectApplication.java`)
-6. Open http://localhost:8080/ in your browser!
-   * If you ran the [`basedata.sql`](https://github.com/jaygajera17/E-commerce-project-springBoot/blob/master2/JtProject/basedata.sql)script on the database, you can log in with the following credentials as admin; otherwise you'll have to manually create an admin user in the database:
+5. Run the project (by running the `main` method in `JtSpringProjectApplication.java`); Or from the terminal, type `mvn spring-boot:run`
+6. Open http://localhost:8080 in your browser!
+   * '/admin/login', Log in as an admin
      * Username: `admin`
      * Password: `123`
-   * Log in as a normal user:
+   * '/login', Log in as a normal user:
      * Username: `lisa`
      * Password: `765`
-
-### Database
-
-MySQL or MariaDB can be used as the database for this project. The database connection can be configured in the `src/main/resources/application.properties` file, with the appropriate values for the following properties:
-
-**( You'd better use another username not root, and ensure that the user has the corresponding permissions for the database. )**
-
-```properties
-    db.url=jdbc:mysql://[ip address of db]:[port of db]/ecommjava?createDatabaseIfNotExist=true
-    db.username=[username]
-    db.password=[password, if any]
-```
-
-if you met the error `java.lang.IllegalArgumentException: Could not resolve placeholder 'db.driver' in value "${db.driver}"`, maybe you should change your `mysql-connector-java` version in `pom.xml` file according to your mysql version, don't forget to reload your Maven project.
-
-Having done that, you must create some base data in the database. You can do that by running the `basedata.sql` script on the database. Check out Google for how to do that, because it depends on what tool you are using to access said database. 
 
 ### Web Directories
 
@@ -75,6 +55,7 @@ When you run the project, the views should be found by Spring Boot and you shoul
 ## Endpoints
 - http://localhost:8080/
 - http://localhost:8080/register
+- http://localhost:8080/admin
 - http://localhost:8080/admin/products
 - http://localhost:8080/admin/customers
 - http://localhost:8080/admin/categories
