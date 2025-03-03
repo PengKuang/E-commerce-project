@@ -24,12 +24,7 @@ public class categoryDao {
 	public Category addCategory(String name) {
 		Category category = new Category();
 		category.setName(name);
-		// this.sessionFactory.getCurrentSession().saveOrUpdate(category);
-		Session session = sessionFactory.openSession();  // 🔍 Use openSession() instead of getCurrentSession()
-		Transaction tx = session.beginTransaction();
 		this.sessionFactory.getCurrentSession().persist(category);
-		tx.commit();
-		session.close();
 		return category;
 	}
 
